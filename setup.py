@@ -1,18 +1,17 @@
 from setuptools import setup
 from setuptools import find_packages
 
-long_description = '''
-Rura is a pipeline for machine learning.
-'''
-
 setup(name='rura',
       version='0.1.0',
+      packages=find_packages(),
+      license='MIT',
       description='Pipelines for machine learning',
-      long_description=long_description,
+      long_description=open('README.md').read(),
+      long_description_content_type='text/markdown',
       author='Filip Dabek',
       url='https://github.com/fdabek1/rura',
-      download_url='https://github.com/fdabek1/rura/tarball/0.1.0',
-      license='MIT',
+      download_url='https://github.com/fdabek1/rura/archive/v0.1.0.tar.gz',
+      keywords=['machine learning', 'pipeline', 'etl'],
       install_requires=[
           'mlflow',
           'numpy>=1.9.1',
@@ -32,17 +31,22 @@ setup(name='rura',
                     'requests',
                     'markdown'],
       },
-      classifiers=[
-          'Development Status :: 5 - Production/Stable',
+      classifiers=[  # Optional
+          # How mature is this project? Common values are
+          #   3 - Alpha
+          #   4 - Beta
+          #   5 - Production/Stable
+          'Development Status :: 3 - Alpha',
+
+          # Indicate who your project is intended for
           'Intended Audience :: Developers',
-          'Intended Audience :: Education',
-          'Intended Audience :: Science/Research',
+          'Topic :: Software Development :: Build Tools',
+
+          # Pick your license as you wish
           'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python :: 2',
-          'Programming Language :: Python :: 2.7',
+
+          # Specify the Python versions you support here. In particular, ensure
+          # that you indicate whether you support Python 2, Python 3 or both.
           'Programming Language :: Python :: 3',
-          'Programming Language :: Python :: 3.6',
-          'Topic :: Software Development :: Libraries',
-          'Topic :: Software Development :: Libraries :: Python Modules'
-      ],
-      packages=find_packages())
+          'Programming Language :: Python :: 3.8',
+      ])
