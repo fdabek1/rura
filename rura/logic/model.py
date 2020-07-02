@@ -34,13 +34,17 @@ class ModelExecute:
 
         if model.is_complete():
             print('Skipping run ' + run['hash'] + '; already exists.')
-            model.load_files()
-            model.load()
+            # model.load_files()
+            # model.load()
             return model
 
         # TODO - Save the run_id to the yaml file
         if Tracker.is_logging():
             run_id = Tracker.start_run(run['hash']).info.run_id
+
+        for source in model.sources:
+            source.load_files()
+            source.load()
 
         print('Processing run ' + run['hash'] + '...')
         process.run_id = run['hash']

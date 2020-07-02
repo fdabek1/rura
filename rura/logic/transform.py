@@ -2,10 +2,14 @@ class Transformer:
     @staticmethod
     def transform(transformer):
         if transformer.is_complete():
-            transformer.load_files()
-            transformer.load()
+            # transformer.load_files()
+            # transformer.load()
             print('Skipping transformer ' + '/'.join(transformer.path) + '; already exists.')
             return
+
+        for source in transformer.sources:
+            source.load_files()
+            source.load()
 
         dataset = transformer.sources[0]
 

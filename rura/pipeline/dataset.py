@@ -11,6 +11,9 @@ class Dataset(Base):
         self.files = files
         self._get_files()
 
+    def load(self):
+        pass
+
     def _get_files(self):
         pass
 

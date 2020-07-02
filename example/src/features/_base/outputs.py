@@ -7,4 +7,9 @@ class Outputs(Transform):
 
     def transform(self, data, data_type):
         model = self.sources[1]
+
+        data = data.drop_duplicates('PatientID')
+        data = data['PatientAge'].values
+        data = data.reshape((-1, 1))
+
         return model.predict(data)
