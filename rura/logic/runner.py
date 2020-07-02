@@ -53,6 +53,11 @@ class Runner:
         with open(os.path.join(PROJECT, self.file), 'w') as w:
             self.yaml.dump(self.config, w)
 
+    def clean_dataset(self, title):
+        path = os.path.join(DATA_PROCESSED, self.analysis_name, title)
+        if os.path.exists(path):
+            shutil.rmtree(path)
+
     def clean_pipeline(self, title):
         path = os.path.join(DATA_PROCESSED, self.analysis_name, title)
         if os.path.exists(path):

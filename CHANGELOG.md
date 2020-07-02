@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2020-XX-XX
 ### Changed
 - Source dependencies will only get loaded when they will be used.
+- Custom seed for patient split is supported.
 
 ## [0.1.0] - 2020-XX-XX
 ### Added

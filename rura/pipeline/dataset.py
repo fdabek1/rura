@@ -45,8 +45,12 @@ class Dataset(Base):
 
     def make_files(self, split):
         df = self.make()
-        if split:
-            df_train, df_val, df_test = split_patients(df)
+        if split is not None:
+            if isinstance(split, dict):
+                seed = split.get('seed', 3)
+            else:
+                seed = 3
+            df_train, df_val, df_test = split_patients(df, seed=seed)
             df_train = df_train.reset_index()
             df_val = df_val.reset_index()
             df_test = df_test.reset_index()

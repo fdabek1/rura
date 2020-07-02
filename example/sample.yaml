@@ -2,6 +2,12 @@ datasets:
   sample:
     raw:
       split: yes
+    a:
+      split:
+        seed: 1
+    b:
+      split:
+        seed: 2
 
 pipelines:
   simple:
@@ -12,6 +18,10 @@ pipelines:
       runs:
         - id:
           hash: _1
+        - hash: _2
+          source: data:sample/a
+        - hash: _2
+          source: data:sample/b
     - hash: 1
       source: 0:_1
       type: model
