@@ -1,0 +1,21 @@
+datasets:
+  sample:
+    raw:
+      split: yes
+
+pipelines:
+  simple:
+    - hash: 0
+      source: data:sample/raw
+      type: transform
+      func: ages
+      runs:
+        - id:
+          hash: _1
+    - hash: 1
+      source: 0:_1
+      type: model
+      func: logistic_regression
+      runs:
+        - id:
+          hash: _1
