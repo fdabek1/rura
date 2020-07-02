@@ -19,3 +19,12 @@ pipelines:
       runs:
         - id:
           hash: _1
+    - hash: 2
+      source:
+        - 0:_1
+        - 1:_1
+      type: transform
+      func: outputs
+      runs:
+        - id:
+          hash: _1
