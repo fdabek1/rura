@@ -10,7 +10,7 @@ setup(name='rura',
       long_description_content_type='text/markdown',
       author='Filip Dabek',
       url='https://github.com/fdabek1/rura',
-      download_url='https://github.com/fdabek1/rura/archive/v0.2.0.tar.gz',
+      download_url='https://github.com/fdabek1/rura/archive/0.2.0.tar.gz',
       keywords=['machine learning', 'pipeline', 'etl'],
       install_requires=[
           'mlflow',
