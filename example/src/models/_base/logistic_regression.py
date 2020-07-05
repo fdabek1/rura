@@ -48,4 +48,4 @@ class LogReg(Model):
         mlflow.sklearn.log_model(self.model, 'model')
 
     def predict(self, x, data_type=None):
-        return self.model.predict(x)
+        return self.model.predict(x).astype(int)

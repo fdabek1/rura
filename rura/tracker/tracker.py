@@ -40,8 +40,8 @@ class Tracker:
 
     @classmethod
     def set_experiment(cls, name):
-        if not cls.IS_LOGGING:
-            return
+        # if not cls.IS_LOGGING:
+        #     return
 
         mlflow.set_experiment(name)
 
@@ -74,9 +74,13 @@ class Tracker:
         cls.client.download_artifacts(run_id, artifact, 'tmp')
 
     @classmethod
+    def resume_run(cls, run_id):
+        return mlflow.start_run(run_id=run_id)
+
+    @classmethod
     def start_run(cls, name, nested_id=None):
-        if not cls.IS_LOGGING:
-            return None
+        # if not cls.IS_LOGGING:
+        #     return None
 
         is_nested = nested_id is not None
         return mlflow.start_run(run_name=name, nested=is_nested)

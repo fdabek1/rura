@@ -1,4 +1,6 @@
 from rura.pipeline.process import Process
+from rura.utils.paths import RESULTS
+import os
 
 
 class TempProcess(Process):
@@ -24,7 +26,25 @@ class TempProcess(Process):
 
         model.log_model()
 
-        self.extra_metrics(model, x_train, y_train, x_val, y_val, x_test, y_test)
+        if not os.path.exists(self.get_output_path(model)):
+            os.makedirs(self.get_output_path(model))
 
-    def extra_metrics(self, model, x_train, y_train, x_val, y_val, x_test, y_test):
+        self.extra_metrics(model, x_train, y_train, 'train')
+        self.extra_metrics(model, x_val, y_val, 'val')
+
+    @staticmethod
+    def get_output_path(model, file=''):
+        return os.path.join(RESULTS, *model.path, file)
+
+    def extra_metrics(self, model, x, y, data_type):
         pass
+
+    def evaluate(self, model):
+        for filename in os.listdir(os.path.join(RESULTS, *model.path)):
+            if filename.startswith('test_'):
+                print('Skipping evaluation due to already evaluated.')
+                return
+
+        # Get the test data
+        x_test, y_test = model.sources[0].get_data(['test_x', 'test_y'], allow_none=True)
+        self.extra_metrics(model, x_test, y_test, 'test')
