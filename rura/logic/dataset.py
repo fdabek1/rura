@@ -21,7 +21,7 @@ class DatasetMaker:
 
         if not dataset.is_complete():
             print('Making dataset ' + section + '/' + title + '...')
-            dataset.make_files(config.get('split', False))
+            dataset.make_files(config.get('split', None))
             print('Done!')
 
         return dataset

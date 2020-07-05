@@ -1,0 +1,41 @@
+datasets:
+  sample:
+    raw:
+      split: yes
+    a:
+      split:
+        seed: 1
+    b:
+      split:
+        seed: 2
+
+pipelines:
+  simple:
+    - hash: 0
+      source: data:sample/raw
+      type: transform
+      func: ages
+      runs:
+        - id:
+          hash: _1
+        - hash: _2
+          source: data:sample/a
+        - hash: _2
+          source: data:sample/b
+    - hash: 1
+      source: 0:_1
+      type: model
+      func: logistic_regression
+      process: Suicide
+      runs:
+        - id:
+          hash: _1
+    - hash: 2
+      source:
+        - data:sample/raw
+        - 1:_1
+      type: transform
+      func: outputs
+      runs:
+        - id:
+          hash: _1

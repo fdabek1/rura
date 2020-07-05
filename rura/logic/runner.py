@@ -53,6 +53,11 @@ class Runner:
         with open(os.path.join(PROJECT, self.file), 'w') as w:
             self.yaml.dump(self.config, w)
 
+    def clean_dataset(self, title):
+        path = os.path.join(DATA_PROCESSED, self.analysis_name, title)
+        if os.path.exists(path):
+            shutil.rmtree(path)
+
     def clean_pipeline(self, title):
         path = os.path.join(DATA_PROCESSED, self.analysis_name, title)
         if os.path.exists(path):
@@ -73,10 +78,26 @@ class Runner:
 
         print('Completed pipeline ' + title)
 
+    def evaluate_model(self, pipeline, model_hash, run_hash):
+        self.current_pipeline_name = pipeline
+        model_item = None
+        for item in self.config['pipelines'][pipeline]:
+            if item['hash'] == model_hash:
+                model_item = item
+            self.execute(item, execute=False)
+
+        if not isinstance(run_hash, list):
+            run_hash = [run_hash]
+
+        for run in run_hash:
+            model = self.items[model_hash][run]
+            self.model_execute.evaluate_model(model_item, model, run)
+            print('Done!')
+
     def get_dataset(self, title):
         return self.dataset.get_dataset(title)
 
-    def execute(self, item):
+    def execute(self, item, execute=True):
         class_def = ClassDef.get_class(item)
         for run in item['runs']:
             parameters = {**item.get('parameters', {}), **run.get('parameters', {})}
@@ -92,9 +113,10 @@ class Runner:
             if item['type'] == 'transform':
                 item_instance = class_def(**parameters)
                 self.items[item['hash']][run['hash']] = item_instance
-                Transformer.transform(item_instance)
+                if execute:
+                    Transformer.transform(item_instance)
             elif item['type'] == 'model':
-                model = self.model_execute.run_model(item, run, class_def, parameters)
+                model = self.model_execute.run_model(item, run, class_def, parameters, execute=execute)
                 self.items[item['hash']][run['hash']] = model
             else:
                 logging.error('Undefined type "' + item['type'] + '".')
