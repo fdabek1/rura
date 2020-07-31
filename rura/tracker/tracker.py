@@ -79,17 +79,11 @@ class Tracker:
 
     @classmethod
     def start_run(cls, name, nested_id=None):
-        # if not cls.IS_LOGGING:
-        #     return None
-
         is_nested = nested_id is not None
         return mlflow.start_run(run_name=name, nested=is_nested)
 
     @classmethod
     def end_run(cls):
-        if not cls.IS_LOGGING:
-            return None
-
         mlflow.end_run()
 
     @classmethod
