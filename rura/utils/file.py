@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import json
 
 
 def read_file(path, ext, options={}):
@@ -15,6 +16,9 @@ def read_file(path, ext, options={}):
     elif ext == 'txt':
         with open(path) as f:
             return f.read()
+    elif ext == 'json':
+        with open(path) as f:
+            return json.load(f)
     else:
         raise NotImplementedError
 
@@ -30,5 +34,8 @@ def save_file(path, ext, data):
     elif ext == 'txt':
         with open(path, 'w') as f:
             f.write(data)
+    elif ext == 'json':
+        with open(path, 'w') as f:
+            json.dump(data, f)
     else:
         raise NotImplementedError
